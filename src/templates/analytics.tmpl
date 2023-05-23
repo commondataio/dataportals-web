@@ -1,0 +1,73 @@
+{% extends "base.tmpl" %}
+{% block pagetitle %}About{% endblock %}
+{% block content %}
+<h1>Statistics and analytics</h1>
+
+<p></p>
+
+<h2>Catalog types</h2>
+<table class="table"><thead>
+        <tr>
+          <th>Name</th>
+          <th>Number</th>
+        </tr>
+      </thead>
+<tbody>
+{% for o in objects_ct %}         
+<tr><td>{{ o.key }}</td><td>{{o.num}}</tr>
+{% endfor %}
+</tbody></table>
+
+<h2>Owner types</h2>
+<table class="table"><thead>
+        <tr>
+          <th>Name</th>
+          <th>Number</th>
+        </tr>
+      </thead>
+<tbody>
+{% for o in objects_ot %}         
+<tr><td>{{ o.key }}</td><td>{{o.num}}</tr>
+{% endfor %}
+</tbody></table>
+
+<h2>Software</h2>
+<table class="table"><thead>
+        <tr>
+          <th>Name</th>
+          <th>Number</th>
+        </tr>
+      </thead>
+<tbody>
+{% for o in objects_sf %}         
+<tr><td>{{ o.key }}</td><td>{{o.num}}</tr>
+{% endfor %}
+</tbody></table>
+
+<h2>Access modes</h2>
+<table class="table"><thead>
+        <tr>
+          <th>Name</th>
+          <th>Number</th>
+        </tr>
+      </thead>
+<tbody>
+{% for o in objects_am %}         
+<tr><td>{{ o.key }}</td><td>{{o.num}}</tr>
+{% endfor %}
+</tbody></table>
+
+<h2>Spoken languages</h2>
+<table class="table"><thead>
+        <tr>
+          <th>Name</th>
+          <th>Number</th>
+        </tr>
+      </thead>
+<tbody>
+{% for o in objects_ln %}         
+<tr><td>{{ o.key }}</td><td>{{o.num}}</tr>
+{% endfor %}
+</tbody></table>
+
+{% endblock %}

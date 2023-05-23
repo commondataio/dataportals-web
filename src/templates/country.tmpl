@@ -1,0 +1,44 @@
+{% extends "base.tmpl" %}
+{% block pagetitle %}{{object.name}} data portals{% endblock %}
+{% block content %}
+<div class="hero-sm bg-gray">
+  <div class="hero-body">
+    <h1>{{object.name}} ({{object.id}})</h1>
+  </div>
+</div>
+<table class="table">
+<thead><th></th><th></th></thead>
+<tbody>
+<tr>
+<td>Total number of data catalogs</td><td>{{object.num_catalogs}}</td>
+</tr>
+</table>
+<br/>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Catalog type</th>
+          <th>Owner type</th>
+          <th>Software</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for o in catalogs_list %}         
+        <tr>
+          <td>{{ o.uid }}</td>
+          <td><a href="/catalog/{{o.uid}}">{{ o.name }}</a></td>
+          <td>{{ o.catalog_type }}</td>
+          <td>{{ o.owner.type }}</td>
+          <td>{{ o.software.name }}</td>
+          <td><a href="{{o.link}}" target="_blank">{{ o.link }}</a></td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.tmpl" %}
+{% block pagetitle %}Data catalogs and portals registry{% endblock %}
+{% block content %}
+<h1>Data catalogs and portals registry</h1>
+
+<p>Download as <a href="https://github.com/commondataio/dataportals-registry/raw/main/data/datasets/catalogs.jsonl">JSON lines</a></a>.
+Raw code and data at <a href="https://github.com/commondataio/dataportals-registry">JSON lines</a>.
+Contact <a href="mailto:ivan@begtin.tech">ivan@begtin.tech</a> if you have any question.
+</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Catalog type</th>
+          <th>Owner type</th>
+          <th>Owner country</th>
+          <th>Software</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for o in objects %}         
+        <tr>
+          <td>{{ o.uid }}</td>
+          <td><a href="/catalog/{{o.uid}}">{{ o.name }}</a></td>
+          <td>{{ o.catalog_type }}</td>
+          <td>{{ o.owner.type }}</td>
+          <td>{{ o.owner.location.country.name}}</td>
+          <td>{{ o.software.name }}</td>
+          <td><a href="{{o.link}}" target="_blank">{{ o.link }}</a></td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+{% endblock %}

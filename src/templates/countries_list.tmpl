@@ -1,0 +1,40 @@
+{% extends "base.tmpl" %}
+{% block pagetitle %}Countries list{% endblock %}
+{% block content %}
+<h1>Data catalogs by countries and territories</h1>
+
+<p></p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Total number of data catalogs</th>
+          <th>Num of open data portals</th>
+          <th>Num geoportals</th>
+          <th>Num research data repositories</th>
+          <th>Num indicators catalogs</th>
+          <th>Num microdata catalogs</th>
+          <th>Other</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for o in objects %}         
+        <tr>
+          <td>{{ o.id }}</td>
+          <td><a href="/country/{{o.id}}">{{ o.name }}</a></td>
+          <td>{{ o.num_catalogs }}</td>
+          <td>{{ o.num_od }}</td>
+          <td>{{ o.num_geo }}</td>
+          <td>{{ o.num_research }}</td>
+          <td>{{ o.num_ind }}</td>
+          <td>{{ o.num_micro }}</td>
+          <td>{{ o.num_other }}</td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+{% endblock %}

@@ -1,3 +1,5 @@
+# Data files
+data/datasets/*.jsonl
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,118 @@
+{% extends "base.tmpl" %}
+{% block pagetitle %}{{object.name}}{% endblock %}
+{% block content %}
+<div class="hero-sm bg-gray">
+  <div class="hero-body">
+    <h1>{{object.name}} ({{object.uid}})</h1>
+    <p>{{object.description}}</p>
+    <p><a href="/catalog/{{object.uid}}.json">JSON</a></p>
+  </div>
+</div>
+<table class="table">
+<thead><th></th><th></th></thead>
+<tbody>
+<tr>
+<td>Link</td><td><a href="{{object.link}}" target="_blank">{{object.link}}</a></td>
+</tr>
+<tr>
+<td>Status</td><td>{{object.status}}</td>
+</tr>
+<tr>
+<td>Catalog type</td><td>{{object.catalog_type}}</td>
+</tr>
+{% if object.identifiers %}
+<tr>
+<td>Identifiers</td><td>{{object.catalog_type}}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>value</th>
+        </tr>
+      </thead>
+<tbody>
+  {% for c in object.identifiers %}
+<tr>
+<td>{{c.id}}</td>
+<td><a href="{{c.url}}" target="_blank">{{c.value}}</a></td>
+</tr>
+  {% endfor %}
+</tbody>
+</table>
+</td>
+</tr>
+
+{% endif %}
+<tr>
+<td>Owner name</td><td>{{object.owner.name}}</td>
+</tr>
+<tr>
+<td>Owner type</td><td>{{object.owner.type}}</td>
+</tr>
+<tr>
+<td>Owner link</td><td><a href="{{object.owner.link}}" target="_blank">{{object.owner.link}}</a></td>
+</tr>
+<tr>
+<td>Owner location</td><td>{{object.owner.location.country.name}}</td>
+</tr>
+<tr>
+<td>Software</td><td>{{object.software.id}} ({{object.software.name}})</td>
+</tr>
+<tr>
+<td>Tags</td><td>{{ object.tags | join(', ') }}</td>
+</tr>
+<tr>
+<td>Access modes</td>
+<td>
+{{ object.access_mode | join(', ') }}
+</td>
+</tr>
+<tr>
+<td>Content types</td>
+<td>
+{{ object.content_types | join(', ') }}
+</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>
+<ul>
+{% for d in object.coverage %}
+ <li>{{d.location.country.name}}</li>
+{% endfor %}
+</ul>
+</td>
+</tr>
+<tr>
+<td>Languages</td>
+<td>
+{{ object.langs | join(', ') }}
+</td>
+</tr>
+<tr>
+<td>Has API?</td><td>{{object.api}}</td>
+</tr>
+<tr>
+<td>API Status</td><td>{{object.api_status}}</td>
+</tr>
+</table>
+{% if object.endpoints %}
+<h3>API Endpoints</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>type</th>
+          <th>url</th>
+        </tr>
+      </thead>
+<tbody>
+  {% for c in object.endpoints %}
+<tr>
+<td>{{c.type}}</td>
+<td><a href="{{c.url}}" target="_blank">{{c.url}}</a></td>
+</tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endif %}
+{% endblock %}
