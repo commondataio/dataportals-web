@@ -3,11 +3,7 @@
 
 import typer
 import datetime
-import requests
-from requests.exceptions import ConnectionError
-from urllib3.exceptions import InsecureRequestWarning
-# Suppress only the single warning from urllib3 needed.
-requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
+from urllib.request import urlretrieve
 
 import yaml
 try:
@@ -133,10 +129,16 @@ def build_stats():
         print('- added index %s' % (ind))
 
 
+def update_datasets():
+    print('Updating datasets')
+    urlretrieve("https://raw.githubusercontent.com/commondataio/dataportals-registry/main/data/datasets/software.jsonl", filename='../data/datasets/software.jsonl'),
+    urlretrieve("https://raw.githubusercontent.com/commondataio/dataportals-registry/main/data/datasets/catalogs.jsonl", filename='../data/datasets/catalogs.jsonl'),
+
 
 @app.command()
 def createdb():
     """Create database from data files"""
+    update_datasets()
     file_to_coll('../data/datasets/catalogs.jsonl', SERVER_NAME, SERVER_PORT, DB_NAME, CATALOGS_COLL, CATALOGS_INDEXES)
     file_to_coll('../data/datasets/software.jsonl', SERVER_NAME, SERVER_PORT, DB_NAME, SOFTWARE_COLL, SOFTWARE_INDEXES)
     build_countries_collection()
