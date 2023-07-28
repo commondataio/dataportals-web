@@ -1,4 +1,6 @@
 # Data files
+catalogs.jsonl
+software.jsonl
 data/datasets/*.jsonl
 # Byte-compiled / optimized / DLL files
 __pycache__/

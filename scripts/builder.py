@@ -132,7 +132,7 @@ def build_stats():
 def update_datasets():
     print('Updating datasets')
     urlretrieve("https://raw.githubusercontent.com/commondataio/dataportals-registry/main/data/datasets/software.jsonl", filename='../data/datasets/software.jsonl'),
-    urlretrieve("https://raw.githubusercontent.com/commondataio/dataportals-registry/main/data/datasets/catalogs.jsonl", filename='../data/datasets/catalogs.jsonl'),
+    urlretrieve("https://raw.githubusercontent.com/commondataio/dataportals-registry/main/data/datasets/full.jsonl", filename='../data/datasets/catalogs.jsonl'),
 
 
 @app.command()
