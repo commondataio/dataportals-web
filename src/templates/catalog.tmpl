@@ -22,7 +22,7 @@
 </tr>
 {% if object.identifiers %}
 <tr>
-<td>Identifiers</td><td>{{object.catalog_type}}
+<td>Identifiers</td><td>
     <table class="table">
       <thead>
         <tr>
@@ -41,7 +41,6 @@
 </table>
 </td>
 </tr>
-
 {% endif %}
 <tr>
 <td>Owner name</td><td>{{object.owner.name}}</td>
@@ -84,14 +83,28 @@
 </td>
 </tr>
 <tr>
-<td>Languages</td>
-<td>
-{{ object.langs | join(', ') }}
+<td>Languages</td><td>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>code</th>
+          <th>name</th>
+        </tr>
+      </thead>
+<tbody>
+  {% for c in object.langs %}
+<tr>
+<td>{{c.id}}</td>
+<td>{{c.name}}</td>
+</tr>
+  {% endfor %}
+</tbody>
+</table>
 </td>
 </tr>
-<tr>
-<td>Has API?</td><td>{{object.api}}</td>
-</tr>
+
+
+
 <tr>
 <td>API Status</td><td>{{object.api_status}}</td>
 </tr>
