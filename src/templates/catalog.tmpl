@@ -1,15 +1,13 @@
 {% extends "base.tmpl" %}
 {% block pagetitle %}{{object.name}}{% endblock %}
 {% block content %}
-<div class="hero-sm bg-gray">
-  <div class="hero-body">
-    <h1>{{object.name}} ({{object.uid}})</h1>
+    <h1 class="title">{{object.name}} ({{object.uid}})</h1>
     <p>{{object.description}}</p>
     <p><a href="/catalog/{{object.uid}}.json">JSON</a></p>
-  </div>
-</div>
-<table class="table">
-<thead><th></th><th></th></thead>
+
+<h3 class="title is-3">General</h3>
+<table class="table is-fullwidth">
+<thead><th>Property</th><th>Value</th></thead>
 <tbody>
 <tr>
 <td>Link</td><td><a href="{{object.link}}" target="_blank">{{object.link}}</a></td>
@@ -73,18 +71,33 @@
 </td>
 </tr>
 <tr>
-<td>Coverage</td>
-<td>
-<ul>
-{% for d in object.coverage %}
- <li>{{d.location.country.name}}</li>
-{% endfor %}
-</ul>
-</td>
+<td>API Status</td><td>{{object.api_status}}</td>
 </tr>
+</table>
+
+
+<h3 class="title is-3">Coverage</h3>
+
+    <table class="table is-fullwidth">
+      <thead>
+        <tr>
+          <th>code</th>
+          <th>name</th>
+        </tr>
+      </thead>
+<tbody>
+  {% for d in object.coverage %}
 <tr>
-<td>Languages</td><td>
-    <table class="table">
+<td>{{d.location.country.id}}</td>
+<td>{{d.location.country.name}}</td>
+</tr>
+  {% endfor %}
+</tbody>
+</table>
+
+
+<h3 class="title is-3">Languages</h3>
+    <table class="table is-fullwidth">
       <thead>
         <tr>
           <th>code</th>
@@ -100,18 +113,11 @@
   {% endfor %}
 </tbody>
 </table>
-</td>
-</tr>
 
-
-
-<tr>
-<td>API Status</td><td>{{object.api_status}}</td>
-</tr>
-</table>
 {% if object.endpoints %}
-<h3>API Endpoints</h3>
-    <table class="table">
+
+<h3 class="title is-3">API Endpoints</h3>
+    <table class="table is-fullwidth">
       <thead>
         <tr>
           <th>type</th>
@@ -127,5 +133,11 @@
   {% endfor %}
 </tbody>
 </table>
+
+<h3 class="title">Feedback</h3>
+<p>
+Do you see a error or any data catalog missing ? Please write as at dateno@dateno.io or write an <a href="https://github.com/commondataio/dataportals-registry/issues">issue</a> on Github. We will resolve it ASAP.
+</p>
+
 {% endif %}
 {% endblock %}

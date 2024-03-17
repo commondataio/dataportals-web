@@ -1,12 +1,29 @@
 {% extends "base.tmpl" %}
-{% block pagetitle %}About{% endblock %}
+{% block pagetitle %}Statistics and analytics{% endblock %}
 {% block content %}
-<h1>Statistics and analytics</h1>
+<h1 class='title'>Statistics and analytics</h1>
+<div class="columns is-fullwidth">
+  <div class="column is-one-quarter">
+<aside class="menu">
+  <p class="menu-label">
+    Catalogs
+  </p>
+  <ul class="menu-list">
+    <li><a href="#catalogtypes">Catalog types</a></li>
+    <li><a href="#ownertypes">Owner types</a></li>
+    <li><a href="#software">Software</a></li>
+    <li><a href="#accessmode">Access mode</a></li>
+    <li><a href="#spokenlang">Spoken languages</a></li>
+  </ul>
 
-<p></p>
+</aside>
 
-<h2>Catalog types</h2>
-<table class="table"><thead>
+</div>
+  <div class="column is-fullwidth">
+
+<h3 id="catalogtypes" class="title is-3">Catalog types</h3>
+<table class="table is-fullwidth">
+<thead>
         <tr>
           <th>Name</th>
           <th>Number</th>
@@ -18,8 +35,8 @@
 {% endfor %}
 </tbody></table>
 
-<h2>Owner types</h2>
-<table class="table"><thead>
+<h3 id="ownertypes" class="title is-3">Owner types</h3>
+<table class="table is-fullwidth"><thead>
         <tr>
           <th>Name</th>
           <th>Number</th>
@@ -31,8 +48,9 @@
 {% endfor %}
 </tbody></table>
 
-<h2>Software</h2>
-<table class="table"><thead>
+<h3 id="software" class="title is-3">Software</h3>
+
+<table class="table is-fullwidth"><thead>
         <tr>
           <th>Name</th>
           <th>Number</th>
@@ -44,8 +62,8 @@
 {% endfor %}
 </tbody></table>
 
-<h2>Access modes</h2>
-<table class="table"><thead>
+<h3 id="accessmode" class="title is-3">Access modes</h3>
+<table class="table is-fullwidth"><thead>
         <tr>
           <th>Name</th>
           <th>Number</th>
@@ -57,17 +75,21 @@
 {% endfor %}
 </tbody></table>
 
-<h2>Spoken languages</h2>
-<table class="table"><thead>
+<h3 id="spokenlang" class="title is-3">Spoken languages</h3>
+<table class="table is-fullwidth"><thead>
         <tr>
+          <th>ID</th>
           <th>Name</th>
           <th>Number</th>
         </tr>
       </thead>
 <tbody>
 {% for o in objects_ln %}         
-<tr><td>{{ o.key }}</td><td>{{o.num}}</tr>
+<tr><td>{{ o.key.id }}</td><td>{{ o.key.name }}</td><td>{{o.num}}</tr>
 {% endfor %}
 </tbody></table>
+
+</div>
+</div>
 
 {% endblock %}

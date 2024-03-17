@@ -9,49 +9,77 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
 <!-- Google Fonts -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 
-<!-- CSS Reset -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
-<!-- Spectre -->
-<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
 
     </head>
     <body>
-<header class="navbar">
-  <section class="navbar-section">
-    <a href="/" class="navbar-brand mr-2">Registry</a>
-    <a href="/countries" class="navbar-brand mr-2">Countries</a>
-    <a href="/analytics" class="navbar-brand mr-2">Analytics</a>
-    <a href="/about" class="navbar-brand mr-2">About</a>
-    <a href="https://github.com/commondataio/dataportals-registry" class="btn btn-link">GitHub</a>
-  </section>
-  <section class="navbar-section">
-<!--
-    <div class="input-group input-inline">
-      <input class="form-input" type="text" placeholder="search">
-      <button class="btn btn-primary input-group-btn">Search</button>
-    </div>
--->
-  </section>
-</header>
-<div class="container">
-  <div class="columns">
-    <div class="column col-1"></div>
-    <div class="column col-9">{% block content %}{% endblock %}</div>
-  </div>
-</div>
-<footer>
-<div class="textwidget"><p style="text-align: center;"><a href="http://creativecommons.org/licenses/by/4.0/" rel="license"><img class="alignnone aligncenter" style="border-width: 3;" src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /></a></p>
-<p style="text-align: center;">This work is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/" rel="license">Creative Commons Attribution 4.0 International License</a>.</p></div>
-<script>
-    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-    posthog.init('phc_GtXy37ewGRhXMqy7FId3xuIAesEcrAOIyb4CrkLrQcy',{api_host:'https://app.posthog.com'})
-</script>
-</footer>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="https://dateno.io">
+      <img src="https://dateno.io/favicon.ico" width="28" height="28">
+    </a>
 
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href='/'>
+        Home
+      </a>
+
+      <a class="navbar-item" href="/countries">
+        Countries
+      </a>
+      <a class="navbar-item" href="/browse">
+        Browse
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="/analytics">
+            Statistics
+          </a>
+          <a class="navbar-item" href="/about">
+            About
+          </a>
+          <hr class="navbar-divider " >
+          <a class="navbar-item github" href="https://github.com/commondataio/dataportals-registry">
+            Github
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<section class="section">
+<div class="container">
+{% block content %}{% endblock %}
+</div>
+</section>
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>Data portals registry</strong> by <a href="https://dateno.io">Dateno</a>. The source code is licensed
+      <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+      is licensed <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY SA 4.0</a>.
+    </p>
+  </div>
+</footer>
     </body>
 </html>

@@ -16,6 +16,8 @@ REGISTRY_HOST = '127.0.0.1'
 REGISTRY_PORT = 8089
 CATALOGS_DATA_PATH = '../data/datasets/catalogs.jsonl'
 
+PAGE_SIZE = 100
+
 client = MongoClient(SERVER_NAME, SERVER_PORT)
 db = client[DB_NAME]
 
@@ -31,6 +33,10 @@ def load_data(filename):
 
 def about_view():
     return render_template('about.tmpl')
+
+def home_view():
+    objects_ct = list(db[STATS_COLL].find({'slice': 'catalogs'}).sort('num', -1).limit(7))
+    return render_template('home.tmpl', stats=objects_ct)
 
 def analytics_view():
     objects_ct = db[STATS_COLL].find({'slice': 'catalogs'}).sort('num', -1)
@@ -50,15 +56,33 @@ def countries_single_view(slug):
 
 
 def catalog_list_view():
-    return render_template('catalogs_list.tmpl', objects=db[CATALOGS_COLL].find())
+    skip_num = 0
+    skip_val = request.args.get('skip')
+    if skip_val is not None and skip_val.isdigit() and int(skip_val) > 0:
+        skip_num = int(skip_val)
+    object_list = list(db[CATALOGS_COLL].find().skip(skip_num).limit(PAGE_SIZE))
+    has_next = len(object_list) == PAGE_SIZE
+    has_prev = skip_num != 0
+    return render_template('catalogs_list.tmpl', objects=object_list, has_next=has_next, has_prev=has_prev, num_skip=skip_num)
 
 def catalog_single_view(slug):
     obj = db[CATALOGS_COLL].find_one({'uid': slug})
     return render_template('catalog.tmpl', object=obj)
 
 def catalog_view_json(slug):
-    obj = db[CATALOGS_COLL].find_one({'uid': slug})
-    del obj['_id']
+    obj = db[CATALOGS_COLL].find_one({'uid': slug}, {'_id' : 0})
+    return jsonify(obj)
+
+def countries_single_view_json(slug):
+    obj = db[COUNTRIES_COLL].find_one({'id': slug}, {'_id' : 0})
+    obj['catalogs'] = list(db[CATALOGS_COLL].find({'owner.location.country.id' : slug}, {'_id' : 0}))
+    return jsonify(obj)
+
+
+def countries_single_view_csv(slug):
+    obj = db[COUNTRIES_COLL].find_one({'id': slug}, {'_id' : 0})
+    records = []
+    obj['catalogs'] = list(db[CATALOGS_COLL].find({'owner.location.country.id' : slug}, {'_id' : 0}))
     return jsonify(obj)
 
 
@@ -67,12 +91,15 @@ def registry_view_json():
 
 
 def add_views_rules(app):
-    app.add_url_rule('/', 'root', catalog_list_view)
+    app.add_url_rule('/countries', 'countries', countries_list_view)
+    app.add_url_rule('/browse', 'search', catalog_list_view)
     app.add_url_rule('/catalogs.json', '/catalogs.json', registry_view_json)
     app.add_url_rule('/catalog/<slug>', 'catalogs/<slug>', catalog_single_view)
     app.add_url_rule('/catalog/<slug>.json', 'catalogs/<slug>.json', catalog_view_json)
-    app.add_url_rule('/countries', 'countries', countries_list_view)
     app.add_url_rule('/country/<slug>', 'countries/<slug>', countries_single_view)
+    app.add_url_rule('/country/<slug>.csv', 'countries/<slug>.csv', countries_single_view_csv)
+    app.add_url_rule('/country/<slug>.json', 'countries/<slug>.json', countries_single_view_csv)
+    app.add_url_rule('/', 'home', home_view)
     app.add_url_rule('/about', 'about', about_view)
     app.add_url_rule('/analytics', 'analytics', analytics_view)
 

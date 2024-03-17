@@ -21,8 +21,14 @@ CATALOG_TYPES_KEYS = {"Open data portal" : "od",
     "Geoportal" : "geo", 
     "Scientific data repository" : "research",
     "Indicators catalog" : "ind",
-    "Microdata catalog" : "micro"
-}
+    "Microdata catalog" : "micro",
+    "General research repository" : "generalresearch",
+    "Machine learning catalog" : "ml",
+    "Datasets list" : "datalist",
+    "Data search engine" : "datasearch",
+    "API Catalog" : "apicat",
+    "Data marketplace" : "datamarket"
+}                
 
 TEXT = """
 Data marketplace	5

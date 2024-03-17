@@ -1,0 +1,88 @@
+{% extends "base.tmpl" %}
+{% block pagetitle %}Data catalogs registry{% endblock %}
+{% block content %}
+
+<h1 class="title">Data catalogs registry</h1>
+
+<nav class="level">
+{% for o in stats %}
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">{{ o.key }}</p>
+      <p class="title">{{ o.num }}</p>
+    </div>
+  </div>
+{% endfor %}
+</nav>
+
+<p>Data catalogs registry is an open data and open source project to create comprehensive database of data catalogs including not only open data catalogs but also catalogs of geodata, ML data datalogs, databases of indicators and timeseries and many more.
+This catalog is a part of <a href="https://dateno.io" target="blank">Dateno</a> search engine and it's available online at <a href="registry.dateno.io">registry.deteno.io</a>.
+</p>
+
+
+<div class="columns">
+  <div class="column">
+
+<div class="card">
+  <div class="card-content">
+    <div class="media">
+      <div class="media-content">
+        <p class="title is-4"><a href="/countries">Country profiles</a></p>
+      </div>
+    </div>
+
+    <div class="content">
+    Data catalogs per country and territory for every country.
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="media">
+      <div class="media-content">
+        <p class="title is-4"><a href="/analytics">Statistics and analytics</a></p>
+      </div>
+    </div>
+
+    <div class="content">
+    Statistics by catalog type, owner type, access mode, spoken language and software type.
+    </div>
+  </div>
+</div>
+
+  </div>
+  <div class="column">
+
+<div class="card">
+  <div class="card-content">
+    <div class="media">
+      <div class="media-content">
+        <p class="title is-4"><a href="/browse">Browse</a></p>
+      </div>
+    </div>
+
+    <div class="content">
+    Browse or download whole data catalogs registry.
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="media">
+      <div class="media-content">
+        <p class="title is-4"><a href="https://github.com/commondataio/dataportals-registry/issues/new">Add your catalog</a></p>
+      </div>
+    </div>
+
+    <div class="content">
+    Add your data catalog to the registry using Github issue.
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+{% endblock %}

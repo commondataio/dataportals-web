@@ -1,13 +1,45 @@
 {% extends "base.tmpl" %}
 {% block pagetitle %}Data catalogs and portals registry{% endblock %}
 {% block content %}
-<h1>Data catalogs and portals registry</h1>
+<h1 class="title">Browse data catalogs registry</h1>
 
-<p>Download as <a href="https://github.com/commondataio/dataportals-registry/raw/main/data/datasets/full.jsonl">JSON lines</a></a>.
-Raw code and data at <a href="https://github.com/commondataio/dataportals-registry">Github</a>.
-Contact <a href="mailto:ivan@begtin.tech">ivan@begtin.tech</a> if you have any question.
-</p>
-    <table class="table">
+<p>Full dataset <a href="https://github.com/commondataio/dataportals-registry/raw/main/data/datasets/full.jsonl">NDJSON/JSON lines</a></p>
+<!--
+<div class="columns">
+<div class="column">
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Type</label>
+  </div>
+  <div class="field-body">
+  <div class="select">
+    <select>
+      <option value="all">All types</option>
+      <option value="Open data portal">Open data portal</option>
+      <option value="Geoportal">Geoportal</option>
+      <option value="Scientific research repository">Research repository</option>
+      <option value="Indicators catalog">Indicators catalog</option>
+      <option value="Microdata catalog">Microdata catalog</option>
+      <option value="Datasets list">Datasets list</option>
+      <option value="Machine learning catalog">Machine learning catalog</option>
+      <option value="General research repository">General research repository</option>
+      <option value="API Catalog">API Catalog</option>
+      <option value="Metadata catalog">Metadata catalog</option>
+      <option value="Data search engine">Data search engine</option>
+      <option value="Data marketplace">Data marketplace</option>
+    </select>
+  </div>
+  </div>
+</div>
+</div>
+<div class="field">
+  <div class="control">
+      <button class="button is-primary">Filter</button>
+  </div>
+</div>
+</div>
+-->
+    <table class="table is-fullwidth">
       <thead>
         <tr>
           <th>ID</th>
@@ -16,7 +48,6 @@ Contact <a href="mailto:ivan@begtin.tech">ivan@begtin.tech</a> if you have any q
           <th>Owner type</th>
           <th>Owner country</th>
           <th>Software</th>
-          <th>Link</th>
         </tr>
       </thead>
       <tbody>
@@ -29,11 +60,19 @@ Contact <a href="mailto:ivan@begtin.tech">ivan@begtin.tech</a> if you have any q
           <td>{{ o.owner.type }}</td>
           <td>{{ o.owner.location.country.name}}</td>
           <td>{{ o.software.name }}</td>
-          <td><a href="{{o.link}}" target="_blank">{{ o.link }}</a></td>
         </tr>
         {% endfor %}
 
       </tbody>
     </table>
+
+<nav class="pagination is-centered" role="navigation" aria-label="pagination">
+{% if has_prev %}
+  <a class="pagination-previous href="/browse?skip={{num_skip - 100}}"">Previous</a>
+{% endif %}
+{% if has_next %}
+  <a class="pagination-next" href="/browse?skip={{num_skip + 100}}">Next page</a>
+{% endif %}
+</nav>
 
 {% endblock %}
