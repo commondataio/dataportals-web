@@ -2,8 +2,9 @@
 {% block pagetitle %}{{object.name}} data catalogs{% endblock %}
 {% block content %}
 <h1 class="title">{{object.name}} ({{object.id}})</h1>
-<p><a href="/country/{{object.id}}.json">JSON</a></p>
+{% if object.dateno.indexed %}<span class="tag is-success mb-4">Indexed</span>{% else %}<span class="tag is-danger mb-4">Not indexed</span>{% endif %}
 
+<h4 class="title is-4">Catalogs stats</h4>
 <nav class="level">
   <div class="level-item has-text-centered">
     <div>
@@ -47,7 +48,14 @@
       <p class="title">{{ object.num_other }}</p>
     </div>
   </div>
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Indexed datasets</p>
+      <p class="title">{{ object.dateno.num_total }}</p>
+    </div>
+  </div>
 </nav>
+
 
 <h4 class="title is-4">List of data catalogs</h4>
     <table class="table is-fullwidth">
@@ -58,6 +66,8 @@
           <th>Type</th>
           <th>Owner type</th>
           <th>Software</th>
+          <th>Is indexed</th>
+          <th>Datasets</th>
         </tr>
       </thead>
       <tbody>
@@ -69,13 +79,18 @@
           <td>{{ o.catalog_type }}</td>
           <td>{{ o.owner.type }}</td>
           <td>{{ o.software.name }}</td>
+          <td class="{% if o.dateno.indexed %}has-background-success-light{% else %}has-background-danger-light{% endif%}">{% if o.dateno.indexed %}Yes {% else %}No{% endif%}</td>
+          <td>{{ o.dateno.num_total }}</td>
         </tr>
         {% endfor %}
 
       </tbody>
     </table>
 
-<h3 class="title">Feedback</h3>
+<h4 class="title is-4">Download</h4>
+<p class='mb-4'><a href="/country/{{object.id}}.json">JSON</a></p>
+
+<h4 class="title is-4">Feedback</h4>
 <p>
 Do you see a error or any data catalog missing ? Please write as at dateno@dateno.io or write an <a href="https://github.com/commondataio/dataportals-registry/issues">issue</a> on Github. We will resolve it ASAP.
 </p>

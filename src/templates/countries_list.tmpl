@@ -16,6 +16,8 @@
           <th>Indicators</th>
           <th>Microdata</th>
           <th>Other</th>
+          <th>Is indexed</th>
+          <th>Datasets</th>
         </tr>
       </thead>
       <tbody>
@@ -30,7 +32,9 @@
           <td>{{ o.num_research }}</td>
           <td>{{ o.num_ind }}</td>
           <td>{{ o.num_micro }}</td>
-          <td>{{ o.num_other }}</td>
+          <td>{{ o.num_other }}</td>          
+          <td class="{% if o.dateno.indexed %}has-background-success-light{% else %}has-background-danger-light{% endif%}">{% if o.dateno.indexed %}Yes {% else %}No{% endif%}</td>
+          <td>{{ o.dateno.num_total }}</td>
         </tr>
         {% endfor %}
 

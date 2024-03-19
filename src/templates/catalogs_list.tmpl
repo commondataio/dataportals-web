@@ -48,6 +48,8 @@
           <th>Owner type</th>
           <th>Owner country</th>
           <th>Software</th>
+          <th>Is indexed</th>
+          <th>Datasets</th>
         </tr>
       </thead>
       <tbody>
@@ -60,6 +62,8 @@
           <td>{{ o.owner.type }}</td>
           <td>{{ o.owner.location.country.name}}</td>
           <td>{{ o.software.name }}</td>
+          <td class="{% if o.dateno.indexed %}has-background-success-light{% else %}has-background-danger-light{% endif%}">{% if o.dateno.indexed %}Yes {% else %}No{% endif%}</td>
+          <td>{{ o.dateno.num_total }}</td>
         </tr>
         {% endfor %}
 

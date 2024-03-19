@@ -2,6 +2,7 @@
 catalogs.jsonl
 software.jsonl
 data/datasets/*.jsonl
+data/datasets/*.json
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

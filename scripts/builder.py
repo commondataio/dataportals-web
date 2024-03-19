@@ -119,7 +119,7 @@ def calc_stats_by_key(client, catalog_key, stats_key, slice_name):
     
 
 
-def build_stats():
+def build_catalog_stats():
     print('Rebuilding statistics')
     client = MongoClient(SERVER_NAME, SERVER_PORT)
     client[DB_NAME][STATS_COLL].drop()
@@ -135,21 +135,68 @@ def build_stats():
         print('- added index %s' % (ind))
 
 
-def update_datasets():
-    print('Updating datasets')
-    urlretrieve("https://raw.githubusercontent.com/commondataio/dataportals-registry/main/data/datasets/software.jsonl", filename='../data/datasets/software.jsonl'),
-    urlretrieve("https://raw.githubusercontent.com/commondataio/dataportals-registry/main/data/datasets/full.jsonl", filename='../data/datasets/catalogs.jsonl'),
+def retrieve(url, filename, force=True):
+    if os.path.exists(filename) and not force:
+        return
+    print('Downloading %s to %s' % (url, filename))
+    urlretrieve(url, filename)
 
+def update_with_dateno_stats():  
+    client = MongoClient(SERVER_NAME, SERVER_PORT)
+    # Update catalogs collection
+    print('Updating catalogs with Dateno stats')
+    coll_cat = client[DB_NAME][CATALOGS_COLL]
+    f = open('../data/datasets/dateno_source_stats.json', 'r', encoding='utf8')
+    data = json.load(f)
+    f.close()
+    for key, value in data.items():
+        print('Updating %s' % (key))
+        coll_cat.update_one({'uid' : key}, {'$set' : {"dateno" : {'indexed': True, "num_total" : int(value)}}}, upsert=False)
+    coll_cat.update_many({'dateno': {'$exists' : False}}, {'$set' : {"dateno" : {'indexed': False, "num_total" : 0}}}, upsert=False)
+
+    print('Updating countries with Dateno stats')
+    coll_count = client[DB_NAME][COUNTRIES_COLL]
+    f = open('../data/datasets/dateno_country_stats.json', 'r', encoding='utf8')
+    data = json.load(f)
+    f.close()
+    for key, value in data.items():
+        print('Updating %s' % (key))
+        coll_count.update_one({'name' : key}, {'$set' : {"dateno" : {'indexed': True, "num_total" : int(value)}}}, upsert=False)
+
+    coll_count.update_many({'dateno': {'$exists' : False}}, {'$set' : {"dateno" : {'indexed': False, "num_total" : 0}}}, upsert=False)
+
+        
+
+
+def update_datasets(force=True):
+    print('Updating datasets')
+    retrieve("https://raw.githubusercontent.com/commondataio/dataportals-registry/main/data/datasets/software.jsonl", filename='../data/datasets/software.jsonl', force=force),
+    retrieve("https://raw.githubusercontent.com/commondataio/dataportals-registry/main/data/datasets/full.jsonl", filename='../data/datasets/catalogs.jsonl', force=force),
+    retrieve("https://raw.githubusercontent.com/commondataio/dateno-stats/main/data/current/crawledsources.json", filename='../data/datasets/dateno_crawled_list.json', force=force),
+    retrieve("https://raw.githubusercontent.com/commondataio/dateno-stats/main/data/current/stats_country_type.json", filename='../data/datasets/dateno_country_type_stats.json', force=force),
+    retrieve("https://raw.githubusercontent.com/commondataio/dateno-stats/main/data/current/stats_sources.json", filename='../data/datasets/dateno_source_stats.json', force=force),
+    retrieve("https://raw.githubusercontent.com/commondataio/dateno-stats/main/data/current/stats_countries.json", filename='../data/datasets/dateno_country_stats.json', force=force)
 
 @app.command()
-def createdb():
-    """Create database from data files"""
-    update_datasets()
+def rebuild(force:bool = False):
+    """Recreate database from data files"""
+    update_datasets(force)
     file_to_coll('../data/datasets/catalogs.jsonl', SERVER_NAME, SERVER_PORT, DB_NAME, CATALOGS_COLL, CATALOGS_INDEXES)
     file_to_coll('../data/datasets/software.jsonl', SERVER_NAME, SERVER_PORT, DB_NAME, SOFTWARE_COLL, SOFTWARE_INDEXES)
     build_countries_collection()
-    build_stats()
+    build_catalog_stats()
+    update_with_dateno_stats()
 
+
+@app.command()
+def getfiles(force:bool = False):
+    """Download latest snapshots"""
+    update_datasets(force)
+
+@app.command()
+def update():    
+    """Update Dateno stats"""
+    update_with_dateno_stats()
 
 if __name__ == "__main__":    
     app()

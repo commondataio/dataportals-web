@@ -3,9 +3,9 @@
 {% block content %}
     <h1 class="title">{{object.name}} ({{object.uid}})</h1>
     <p>{{object.description}}</p>
-    <p><a href="/catalog/{{object.uid}}.json">JSON</a></p>
+{% if object.dateno.indexed %}<span class="tag is-success mb-4">Indexed</span>{% else %}<span class="tag is-danger mb-4">Not indexed</span>{% endif %}
 
-<h3 class="title is-3">General</h3>
+<h4 class="title is-4">General</h4>
 <table class="table is-fullwidth">
 <thead><th>Property</th><th>Value</th></thead>
 <tbody>
@@ -76,7 +76,7 @@
 </table>
 
 
-<h3 class="title is-3">Coverage</h3>
+<h4 class="title is-4">Coverage</h4>
 
     <table class="table is-fullwidth">
       <thead>
@@ -96,7 +96,7 @@
 </table>
 
 
-<h3 class="title is-3">Languages</h3>
+<h4 class="title is-4">Languages</h4>
     <table class="table is-fullwidth">
       <thead>
         <tr>
@@ -116,7 +116,7 @@
 
 {% if object.endpoints %}
 
-<h3 class="title is-3">API Endpoints</h3>
+<h4 class="title is-4">API Endpoints</h4>
     <table class="table is-fullwidth">
       <thead>
         <tr>
@@ -134,7 +134,10 @@
 </tbody>
 </table>
 
-<h3 class="title">Feedback</h3>
+<h4 class="title is-4">Download</h4>
+    <p class='mb-4'><a href="/catalog/{{object.uid}}.json">JSON</a></p>
+
+<h4 class="title is-4">Feedback</h4>
 <p>
 Do you see a error or any data catalog missing ? Please write as at dateno@dateno.io or write an <a href="https://github.com/commondataio/dataportals-registry/issues">issue</a> on Github. We will resolve it ASAP.
 </p>
