@@ -3,7 +3,8 @@
 
 import typer
 import datetime
-from urllib.request import urlretrieve
+# from urllib.request import urlretrieve
+import requests
 
 import yaml
 try:
@@ -138,8 +139,14 @@ def build_catalog_stats():
 def retrieve(url, filename, force=True):
     if os.path.exists(filename) and not force:
         return
+   
+    response = requests.get(url)
     print('Downloading %s to %s' % (url, filename))
-    urlretrieve(url, filename)
+    if response.status_code == 200:
+        with open(filename, "wb") as file:
+            file.write(response.content)
+    else:
+        print("Failed to download the file. Status code:", response.status_code)
 
 def update_with_dateno_stats():  
     client = MongoClient(SERVER_NAME, SERVER_PORT)
